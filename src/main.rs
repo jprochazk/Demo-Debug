@@ -14,7 +14,7 @@ cfg_if::cfg_if! {
         async fn main() {
 
             tracing_subscriber::fmt::fmt().with_max_level(Level::DEBUG).init();
-            std::env::set_var("OPENAI_API_KEY", "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");
+            std::env::set_var("OPENAI_API_KEY", "");
 
             HttpServer::new(move || {
                 let cors = Cors::default().allow_any_origin().max_age(3600);
