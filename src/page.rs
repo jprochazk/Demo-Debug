@@ -19,6 +19,7 @@ impl eframe::App for Report {
                     let request = ehttp::Request::get(url);
                     let text = self.text.clone();
 
+                    let ctx = ctx.clone();
                     ehttp::streaming::fetch(
                         request,
                         move |result: ehttp::Result<ehttp::streaming::Part>| {
@@ -29,7 +30,7 @@ impl eframe::App for Report {
                                 }
                             };
 
-                            match part {
+                            let out = match part {
                                 ehttp::streaming::Part::Response(response) => {
                                     tracing::debug!("RESPONSE");
                                     tracing::debug!("Status code: {:?}", response.status);
@@ -48,7 +49,9 @@ impl eframe::App for Report {
                                         std::ops::ControlFlow::Continue(())
                                     }
                                 }
-                            }
+                            };
+                            ctx.request_repaint();
+                            out
                         },
                     );
                 }

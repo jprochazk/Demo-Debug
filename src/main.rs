@@ -25,7 +25,7 @@ cfg_if::cfg_if! {
                     .service(actix_files::Files::new("/", "./dist").prefer_utf8(true))
                     .wrap(cors)
                     .wrap(actix_web::middleware::Logger::new("%r %U").log_target("actix"))
-                    .wrap(actix_web::middleware::Compress::default())
+                    // .wrap(actix_web::middleware::Compress::default())
             })
             .bind(("127.0.0.1", 8000))
             .unwrap()
