@@ -1,0 +1,36 @@
+[package]
+name = "report-gen-demo"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+eframe = { version = "0.22.0", default-features = false ,features = [
+	"default_fonts",
+    "accesskit",     # Make egui comptaible with screen readers. NOTE: adds a lot of dependencies.
+    "default_fonts", # Embed the default egui fonts.
+    "glow",          # Use the glow rendering backend. Alternative: "wgpu".
+    "persistence",   # Enable restoring app state when restarting the app.
+] }
+cfg-if = "1.0.0"
+ehttp = { version = "0.3.0", features = ["streaming"] }
+tracing-subscriber = { version = "0.3.17", features = ["parking_lot"] }
+tracing = "0.1.37"
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+futures = "0.3.28"
+tokio = { version = "1.29.1", features = ["rt-multi-thread", "bytes", "process"] }
+async-openai = "0.14.0"
+actix-web = "4.3.1"
+actix-cors = "0.6.4"
+actix-files = "0.6.2"
+
+# web:
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen-futures = "0.4"
+wasm-bindgen = "0.2.87"
+console_log = { version = "1.0.0", features = ["color"] }
+console_error_panic_hook = "0.1.7"
+tracing-wasm = "0.2.1"
+log = "0.4.19"
